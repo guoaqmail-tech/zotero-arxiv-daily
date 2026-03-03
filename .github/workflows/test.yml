@@ -26,9 +26,18 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_API_BASE: ${{ secrets.OPENAI_API_BASE }}
           CUSTOM_CONFIG: ${{ vars.CUSTOM_CONFIG }}
+       # run: |
+       #   export DEBUG=true
+       #   printf "%b\n" "$CUSTOM_CONFIG" > config/custom.yaml
+       #   echo "Use custom config: "
+       #   cat config/custom.yaml
+       #   uv run src/zotero_arxiv_daily/main.py
         run: |
           export DEBUG=true
+          mkdir -p config
           printf "%b\n" "$CUSTOM_CONFIG" > config/custom.yaml
           echo "Use custom config: "
           cat config/custom.yaml
-          uv run src/zotero_arxiv_daily/main.py
+          
+          # 核心修改：使用 --config-dir 强制指定配置目录，使用 --config-name 指定文件名
+          uv run src/zotero_arxiv_daily/main.py --config-dir "$PWD/config" --config-name custom
