@@ -27,8 +27,23 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_API_BASE: ${{ secrets.OPENAI_API_BASE }}
           CUSTOM_CONFIG: ${{ vars.CUSTOM_CONFIG }}
+        #run: |
+        #  printf "%b\n" "$CUSTOM_CONFIG" > config/custom.yaml
+        #  echo "Use custom config: "
+        #  cat config/custom.yaml
+        #  uv run src/zotero_arxiv_daily/main.py
         run: |
+          # 1. 确保 config 文件夹存在
+          mkdir -p config
+          
+          # 2. 写入自定义配置
           printf "%b\n" "$CUSTOM_CONFIG" > config/custom.yaml
           echo "Use custom config: "
           cat config/custom.yaml
-          uv run src/zotero_arxiv_daily/main.py
+          
+          # 3. 核心修复：显式使用 python 运行，并指定 Hydra 配置路径和文件名
+          # 增加 executor.source 作为保底参数防止报错
+          uv run python src/zotero_arxiv_daily/main.py \
+            --config-dir "$PWD/config" \
+            --config-name custom \
+            executor.source="[zotero, arxiv]"
