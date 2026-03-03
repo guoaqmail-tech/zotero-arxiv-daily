@@ -27,20 +27,20 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_API_BASE: ${{ secrets.OPENAI_API_BASE }}
           CUSTOM_CONFIG: ${{ vars.CUSTOM_CONFIG }}
-        #run: |
-        #  printf "%b\n" "$CUSTOM_CONFIG" > config/custom.yaml
-        #  echo "Use custom config: "
-        #  cat config/custom.yaml
-        #  uv run src/zotero_arxiv_daily/main.py
         run: |
-          mkdir -p config
           printf "%b\n" "$CUSTOM_CONFIG" > config/custom.yaml
           echo "Use custom config: "
           cat config/custom.yaml
+          uv run src/zotero_arxiv_daily/main.py executor.source="[arxiv]"
+        #run: |
+        #  mkdir -p config
+        #  printf "%b\n" "$CUSTOM_CONFIG" > config/custom.yaml
+        #  echo "Use custom config: "
+        #  cat config/custom.yaml
           
-          # 3. Core fix: Explicitly use 'python' to run the script and specify the Hydra config path and filename.
-          # Add 'executor.source' as a fallback parameter to prevent errors.
-          uv run python src/zotero_arxiv_daily/main.py \
-            --config-dir "$PWD/config" \
-            --config-name custom \
-            +executor.source="[zotero, arxiv]"
+        #  # 3. Core fix: Explicitly use 'python' to run the script and specify the Hydra config path and filename.
+        #  # Add 'executor.source' as a fallback parameter to prevent errors.
+        #  uv run python src/zotero_arxiv_daily/main.py \
+        #    --config-dir "$PWD/config" \
+        #    --config-name custom \
+        #    +executor.source="[zotero, arxiv]"
