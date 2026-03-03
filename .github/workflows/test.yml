@@ -34,7 +34,7 @@ jobs:
        #   uv run src/zotero_arxiv_daily/main.py
         run: |
           export DEBUG=true
-          uv run python src/zotero_arxiv_daily/main.py executor.source="[zotero, arxiv]"
+          uv run python src/zotero_arxiv_daily/main.py executor.source="[arxiv]"
           # mkdir -p config
           # printf "%b\n" "$CUSTOM_CONFIG" > config/custom.yaml
           # echo "Use custom config: "
