@@ -39,5 +39,5 @@ jobs:
           echo "Use custom config: "
           cat config/custom.yaml
           
-          # 核心修改：使用 --config-dir 强制指定配置目录，使用 --config-name 指定文件名
+          # Key modification: Use --config-dir to explicitly specify the configuration directory, and use --config-name to specify the file name.
           uv run src/zotero_arxiv_daily/main.py --config-dir "$PWD/config" --config-name custom
