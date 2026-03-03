@@ -43,4 +43,4 @@ jobs:
           uv run python src/zotero_arxiv_daily/main.py \
             --config-dir "$PWD/config" \
             --config-name custom \
-            executor.source="[zotero, arxiv]"
+            +executor.source="[zotero, arxiv]"
